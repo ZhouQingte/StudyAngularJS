@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+    <script type="text/javascript" src="angular.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title></title>
+</head>
+<body>
+<form name="issues" ng-controller="myctrl">
+    请输入标题:<br/><input  style="width:200px;height:20px" ng-model="mytitle"/><br/>
+    请输入内容:<br/><input  style="width:200px;height:200px" ng-model="mycontent"/><br/>
+    <button style="margin-left: 160px" ng-click="submit()">提交</button><br/>
+</form>
+</body>
+<script>
+    var myapp = angular.module('myapp', []);
+    myapp.controller('myctrl', ['$scope','$http', function ($scope, $http) {
+        $scope.submit= function () {
+            $http.post('https://github.com/hanjianwei/feedback/issues',
+                    {
+                        "title": $scope.mytitle,
+                        "body": $scope.mycontent
+                    }).success(function(){
+                        alert("发送成功！");
+                    }).error(function(){
+                        alert("发送失败！");
+                    });
+        };
+    }]);
+</script>
+</html>
